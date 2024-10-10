@@ -1,32 +1,22 @@
-import { useState } from "react";
-import ColorChange from "./ColorChange";
-
-export default function ColorInput() {
-  const [hex, setHex] = useState("#FFFFFF");
-
-  const handleSubmit = (evt) => {
-    evt.preventDefault();
-  };
-
-  const onChangeHex = ({ target }) => {
-    setHex(target.value);
-  };
-
-  console.log(hex);
-
+export default function ColorInput({ onHexChange, onSubmit, form }) {
   return (
-    <div className="page-container" style={{ background: hex }}>
-    <form onSubmit={handleSubmit}>
+    <form className="form" onSubmit={onSubmit}>
       <input
-        type="text"
+        className="input"
+        id="hex"
         name="hex"
-        value={hex}
-        onInput={onChangeHex}
+        value={form.hex}
         maxLength="7"
-        placeholder="#ваш цвет"
+        onChange={onHexChange}
       />
-      <ColorChange hex={hex} />
+      <input
+        className="label rgb"
+        value={form.rgb}
+        style={{
+          background: form.rgb === "Ошибка" ? `rgb(227, 38, 54)` : form.rgb,
+        }}
+        readOnly
+      />
     </form>
-    </div>
   );
 }
